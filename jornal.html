@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jornal</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+      rel="stylesheet"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <script
+      crossorigin="anonymous"
+      integrity="sha512-DZqqY3PiOvTP9HkjIWgjO6ouCbq+dxqWoJZ/Q+zPYNHmlnI2dQnbJ5bxAHpAMw+LXRm4D72EIRXzvcHQtE8/VQ=="
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"
+    ></script>
+  </head>
+  <style>
+    .container {
+      position: relative;
+      margin-left: auto;
+      margin-right: auto;
+      width: 90%;
+    }
+  </style>
+  <body>
+    <div id="post" class="row row-cols-1 row-cols-md-3 g-4"></div>
+
+    <script>
+      fetch("https://jsonplaceholder.typicode.com/photos")
+        .then((response) => response.json())
+        .then((publicacoes) => renderizarJornal(publicacoes));
+
+      function renderizarJornal(publicacoes) {
+        const posts = document.getElementById("post");
+        for (let i = 0; i < 30; i++) {
+          const publi = publicacoes[i];
+          const newPubli = document.createElement("div");
+          const html = `
+          <div class="col">
+            <div class="card h-100">
+            <img src="${publi.url}" class="card-img-top" alt="..." />
+            <div class="card-body">
+                <h5 class="card-title">Notícia Diária</h5>
+                <p class="card-text">
+                ${publi.title}
+                </p>
+            </div>
+            <div class="card-footer">
+                <small class="text-body-secondary">Last updated 3 mins ago</small>
+            </div>
+            </div>
+        </div>`;
+          newPubli.innerHTML = html;
+          posts.appendChild(newPubli);
+        }
+      }
+    </script>
+  </body>
+</html>
